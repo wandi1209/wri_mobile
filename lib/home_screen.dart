@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wri_mobile/modals/add_todo.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,13 +10,33 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<bool> checkedList = List.generate(100, (index) => false);
+  Map<String, dynamic> todosData = {};
+
+  void addTodoModal() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: Container(
+            padding: EdgeInsets.all(20),
+            height: 300,
+            child: AddTodo(),
+          ),
+        );
+      },
+    );
+  }
+
+  void addTodo() {}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue[200],
-        onPressed: () {},
+        onPressed: addTodoModal,
         child: Icon(
           Icons.add,
           size: 30,
