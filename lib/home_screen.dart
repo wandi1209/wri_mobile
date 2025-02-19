@@ -9,11 +9,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<bool> checkedList = List.generate(100, (index) => false);
-  Map<String, dynamic> todosData = {};
+  List<Map<String, dynamic>> todosData = [];
 
   void addTodoModal() {
     showModalBottomSheet(
+      backgroundColor: Colors.grey[100],
       context: context,
       isScrollControlled: true,
       builder: (context) {
@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void addTodo() {}
+  void addTodo(String title, String desc) {}
 
   @override
   Widget build(BuildContext context) {
@@ -99,52 +99,58 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: 100,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        color:
-                            checkedList[index] ? Colors.grey[50] : Colors.white,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: ListTile(
-                        leading: Checkbox(
-                          value: checkedList[index],
-                          activeColor: Colors.blue,
-                          side: BorderSide(color: Colors.blue, width: 2),
-                          onChanged: (value) {
-                            checkedList[index] = value!;
-                            setState(() {});
-                          },
-                        ),
-                        title: Text(
-                          "Belajar",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Text(
-                          "Belajar Desain Flutter",
-                          style: TextStyle(
-                              color: Colors.grey[400],
-                              fontWeight: FontWeight.bold),
-                        ),
-                        trailing: Icon(
-                          Icons.delete,
-                          color: checkedList[index]
-                              ? Colors.red[100]
-                              : Colors.red[300],
-                        ),
-                      ),
+              child: (todosData.isEmpty)
+                  ? Center(
+                      heightFactor: 50,
+                      child: Text("No item on your to do list."),
+                    )
+                  : ListView.builder(
+                      itemCount: todosData.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 5,
+                            ),
+                            decoration: BoxDecoration(
+                              color: todosData[index]["isCompleted"]
+                                  ? Colors.grey[50]
+                                  : Colors.white,
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: ListTile(
+                              leading: Checkbox(
+                                value: todosData[index]["isCompleted"],
+                                activeColor: Colors.blue,
+                                side: BorderSide(color: Colors.blue, width: 2),
+                                onChanged: (value) {
+                                  todosData[index]["isCompleted"] = value!;
+                                  setState(() {});
+                                },
+                              ),
+                              title: Text(
+                                todosData[index]["title"],
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                todosData[index]["desc"],
+                                style: TextStyle(
+                                    color: Colors.grey[400],
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              trailing: Icon(
+                                Icons.delete,
+                                color: todosData[index]["isCompleted"]
+                                    ? Colors.red[100]
+                                    : Colors.red[300],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             )
           ],
         ),
