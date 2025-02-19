@@ -13,6 +13,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue[200],
+        onPressed: () {},
+        child: Icon(
+          Icons.add,
+          size: 30,
+          color: Colors.white,
+        ),
+      ),
       appBar: AppBar(
         leading: Icon(Icons.menu),
         actions: [
@@ -107,7 +116,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           secondary: Icon(
                             Icons.delete,
-                            color: Colors.red[400],
+                            color: checkedList[index]
+                                ? Colors.red[100]
+                                : Colors.red[300],
                           ),
                         )),
                   );
