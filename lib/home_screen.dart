@@ -149,11 +149,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: Colors.grey[400],
                                     fontWeight: FontWeight.bold),
                               ),
-                              trailing: Icon(
-                                Icons.delete,
-                                color: todosData[index]["isCompleted"]
-                                    ? Colors.red[100]
-                                    : Colors.red[300],
+                              trailing: InkWell(
+                                onTap: () {
+                                  AlertDialog(
+                                    title: Text("Are You sure?"),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {},
+                                          child: Text("Delete"))
+                                    ],
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.delete,
+                                  color: todosData[index]["isCompleted"]
+                                      ? Colors.red[100]
+                                      : Colors.red[300],
+                                ),
                               ),
                             ),
                           ),
