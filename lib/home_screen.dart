@@ -11,25 +11,34 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> todosData = [];
 
+  void addTodo() {
+    todosData.insert(0, {
+      "title": "tes",
+      "desc": "tes juga",
+      "isCompleted": false,
+    });
+    setState(() {});
+  }
+
   void addTodoModal() {
     showModalBottomSheet(
       backgroundColor: Colors.grey[100],
-      context: context,
       isScrollControlled: true,
+      context: context,
       builder: (context) {
         return Padding(
           padding: MediaQuery.of(context).viewInsets,
           child: Container(
             padding: EdgeInsets.all(20),
             height: 300,
-            child: AddTodo(),
+            child: AddTodo(
+              addTodo: addTodo,
+            ),
           ),
         );
       },
     );
   }
-
-  void addTodo(String title, String desc) {}
 
   @override
   Widget build(BuildContext context) {

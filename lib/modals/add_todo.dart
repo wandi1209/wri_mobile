@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AddTodo extends StatefulWidget {
-  const AddTodo({super.key});
+  void Function() addTodo;
+  AddTodo({super.key, required this.addTodo});
 
   @override
   State<AddTodo> createState() => _AddTodoState();
@@ -40,7 +41,7 @@ class _AddTodoState extends State<AddTodo> {
               child: ElevatedButton(
                 style:
                     ElevatedButton.styleFrom(backgroundColor: Colors.blue[300]),
-                onPressed: () {},
+                onPressed: widget.addTodo,
                 child: Text(
                   "Add Todo",
                   style: TextStyle(color: Colors.white),
