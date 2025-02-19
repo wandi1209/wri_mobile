@@ -85,42 +85,42 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
                     child: Container(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 5,
-                        ),
-                        decoration: BoxDecoration(
-                          color: checkedList[index]
-                              ? Colors.grey[50]
-                              : Colors.white,
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        child: CheckboxListTile(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        color:
+                            checkedList[index] ? Colors.grey[50] : Colors.white,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: ListTile(
+                        leading: Checkbox(
                           value: checkedList[index],
                           activeColor: Colors.blue,
-                          controlAffinity: ListTileControlAffinity.leading,
                           side: BorderSide(color: Colors.blue, width: 2),
-                          visualDensity: VisualDensity(horizontal: -4),
                           onChanged: (value) {
                             checkedList[index] = value!;
                             setState(() {});
                           },
-                          title: Text(
-                            "Belajar",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(
-                            "Belajar Desain Flutter",
-                            style: TextStyle(
-                                color: Colors.grey[400],
-                                fontWeight: FontWeight.bold),
-                          ),
-                          secondary: Icon(
-                            Icons.delete,
-                            color: checkedList[index]
-                                ? Colors.red[100]
-                                : Colors.red[300],
-                          ),
-                        )),
+                        ),
+                        title: Text(
+                          "Belajar",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                          "Belajar Desain Flutter",
+                          style: TextStyle(
+                              color: Colors.grey[400],
+                              fontWeight: FontWeight.bold),
+                        ),
+                        trailing: Icon(
+                          Icons.delete,
+                          color: checkedList[index]
+                              ? Colors.red[100]
+                              : Colors.red[300],
+                        ),
+                      ),
+                    ),
                   );
                 },
               ),
