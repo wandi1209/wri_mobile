@@ -151,14 +151,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               trailing: InkWell(
                                 onTap: () {
-                                  AlertDialog(
-                                    title: Text("Are You sure?"),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () {},
-                                          child: Text("Delete"))
-                                    ],
-                                  );
+                                  todosData.removeAt(index);
+                                  setState(() {});
                                 },
                                 child: Icon(
                                   Icons.delete,
