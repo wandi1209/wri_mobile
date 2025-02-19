@@ -19,30 +19,36 @@ class _AddTodoState extends State<AddTodo> {
         ),
         TextField(
           decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.transparent),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.transparent),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.transparent),
-            ),
-            hintText: "Write your todo here...",
+            hintText: "Write here...",
           ),
         ),
-        SizedBox(height: 40),
-        Text("Description"),
+        SizedBox(height: 20),
+        Text(
+          "Description",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
         TextField(
           decoration: InputDecoration(
-            hintText: "Write your todo here...",
+            hintText: "Write here...",
           ),
         ),
+        SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.blue[300]),
+                onPressed: () {},
+                child: Text(
+                  "Add Todo",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        )
       ],
     );
   }

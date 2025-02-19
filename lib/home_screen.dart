@@ -101,7 +101,6 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: (todosData.isEmpty)
                   ? Center(
-                      heightFactor: 50,
                       child: Text("No item on your to do list."),
                     )
                   : ListView.builder(
