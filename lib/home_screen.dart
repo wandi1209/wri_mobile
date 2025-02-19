@@ -11,13 +11,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> todosData = [];
 
-  void addTodo() {
+  void addTodo({required String title, required String desc}) {
     todosData.insert(0, {
-      "title": "tes",
-      "desc": "tes juga",
+      "title": title,
+      "desc": desc,
       "isCompleted": false,
     });
     setState(() {});
+    Navigator.pop(context);
   }
 
   void addTodoModal() {

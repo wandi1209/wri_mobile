@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AddTodo extends StatefulWidget {
-  void Function() addTodo;
+  void Function({required String title, required String desc}) addTodo;
   AddTodo({super.key, required this.addTodo});
 
   @override
@@ -9,6 +9,9 @@ class AddTodo extends StatefulWidget {
 }
 
 class _AddTodoState extends State<AddTodo> {
+  TextEditingController titleText = TextEditingController();
+  TextEditingController descText = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,6 +22,7 @@ class _AddTodoState extends State<AddTodo> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
         TextField(
+          controller: titleText,
           decoration: InputDecoration(
             hintText: "Write here...",
           ),
@@ -29,6 +33,7 @@ class _AddTodoState extends State<AddTodo> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
         TextField(
+          controller: descText,
           decoration: InputDecoration(
             hintText: "Write here...",
           ),
@@ -41,7 +46,17 @@ class _AddTodoState extends State<AddTodo> {
               child: ElevatedButton(
                 style:
                     ElevatedButton.styleFrom(backgroundColor: Colors.blue[300]),
-                onPressed: widget.addTodo,
+                onPressed: () {
+                  if (titleText.text.isNotEmpty) {
+                    if (descText.text.isEmpty) {
+                      descText.text = "";
+                    }
+                    widget.addTodo(title: titleText.text, desc: descText.text);
+                  }
+
+                  titleText.text = "";
+                  descText.text = "";
+                },
                 child: Text(
                   "Add Todo",
                   style: TextStyle(color: Colors.white),
