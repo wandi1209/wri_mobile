@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wri_mobile/home_screen.dart';
-import 'package:wri_mobile/login_screen.dart';
+import 'package:wri_mobile/screens/home_screen.dart';
+import 'package:wri_mobile/screens/login_screen.dart';
 
 void main() {
   runApp(MyApp());

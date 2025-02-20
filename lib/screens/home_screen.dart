@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wri_mobile/modals/add_todo.dart';
+import 'package:wri_mobile/controllers/add_todo.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
