@@ -73,6 +73,30 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        backgroundColor: Colors.grey[100],
+        child: Column(
+          children: [
+            Container(
+              color: Colors.blue[200],
+              width: double.infinity,
+              height: 150,
+              child: Center(
+                  child: Text(
+                "ToDo App",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              )),
+            ),
+            ListTile(
+              leading: Icon(Icons.check_box),
+              title: Text(
+                "Completed",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue[200],
         onPressed: addTodoModal,
@@ -83,7 +107,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       appBar: AppBar(
-        leading: Icon(Icons.menu),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 5),
