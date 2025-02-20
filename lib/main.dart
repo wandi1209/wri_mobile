@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
           scaffoldBackgroundColor: Colors.grey[100],
           appBarTheme: AppBarTheme(color: Colors.grey[100])),
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }

@@ -88,6 +88,15 @@ class _HomeScreenState extends State<HomeScreen> {
               )),
             ),
             ListTile(
+              onTap: () {},
+              leading: Icon(Icons.today),
+              title: Text(
+                "To Do",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            ListTile(
+              onTap: () {},
               leading: Icon(Icons.check_box),
               title: Text(
                 "Completed",
