@@ -41,6 +41,35 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void deleteTodo({required int index}) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Are you sure?"),
+          content: Text("Are you sure delete this todo?"),
+          backgroundColor: Colors.grey[100],
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                todosData.removeAt(index);
+                setState(() {});
+                Navigator.pop(context);
+              },
+              child: Text("Delete"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,8 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               trailing: InkWell(
                                 onTap: () {
-                                  todosData.removeAt(index);
-                                  setState(() {});
+                                  deleteTodo(index: index);
                                 },
                                 child: Icon(
                                   Icons.delete,
