@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wri_mobile/controllers/add_todo.dart';
+import 'package:wri_mobile/models/get_todos_response.dart';
+import 'package:wri_mobile/services/api_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,6 +12,21 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> todosData = [];
+  late GetTodosResponse _todos;
+  bool isLoading = false;
+  final apiService = ApiService();
+
+  void getTodos() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final todos = await apiService.getTodos();
+    setState(() {
+      _todos = todos;
+      isLoading = false;
+    });
+  }
 
   void addTodo({required String title, required String desc}) {
     todosData.insert(0, {
@@ -17,6 +34,16 @@ class _HomeScreenState extends State<HomeScreen> {
       "desc": desc,
       "isCompleted": false,
     });
+    setState(() {});
+    Navigator.pop(context);
+  }
+
+  void addTodoList({required String title, required String desc}) async {
+    await apiService.addTodos(
+      title: title,
+      desc: desc,
+    );
+    getTodos();
     setState(() {});
     Navigator.pop(context);
   }
@@ -33,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.all(20),
             height: 300,
             child: AddTodo(
-              addTodo: addTodo,
+              addTodo: addTodoList,
             ),
           ),
         );
@@ -41,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void deleteTodo({required int index}) {
+  void deleteTodo({required String id}) {
     showDialog(
       context: context,
       builder: (context) {
@@ -57,9 +84,14 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text("Cancel"),
             ),
             TextButton(
-              onPressed: () {
-                todosData.removeAt(index);
+              onPressed: () async {
+                try {
+                  await apiService.deleteTodo(id: id);
+                } catch (e) {
+                  print(e);
+                }
                 setState(() {});
+                getTodos();
                 Navigator.pop(context);
               },
               child: Text("Delete"),
@@ -68,6 +100,12 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    getTodos();
+    super.initState();
   }
 
   @override
@@ -170,62 +208,66 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             Expanded(
-              child: (todosData.isEmpty)
+              child: isLoading
                   ? Center(
-                      child: Text("No item on your to do list."),
+                      child: CircularProgressIndicator(),
                     )
-                  : ListView.builder(
-                      itemCount: todosData.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 5,
-                            ),
-                            decoration: BoxDecoration(
-                              color: todosData[index]["isCompleted"]
-                                  ? Colors.grey[50]
-                                  : Colors.white,
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: ListTile(
-                              leading: Checkbox(
-                                value: todosData[index]["isCompleted"],
-                                activeColor: Colors.blue,
-                                side: BorderSide(color: Colors.blue, width: 2),
-                                onChanged: (value) {
-                                  todosData[index]["isCompleted"] = value!;
-                                  setState(() {});
-                                },
-                              ),
-                              title: Text(
-                                todosData[index]["title"],
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              subtitle: Text(
-                                todosData[index]["desc"],
-                                style: TextStyle(
-                                    color: Colors.grey[400],
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              trailing: InkWell(
-                                onTap: () {
-                                  deleteTodo(index: index);
-                                },
-                                child: Icon(
-                                  Icons.delete,
-                                  color: todosData[index]["isCompleted"]
-                                      ? Colors.red[100]
-                                      : Colors.red[300],
+                  : (_todos.items.isEmpty)
+                      ? Center(
+                          child: Text("No item on your to do list."),
+                        )
+                      : ListView.builder(
+                          itemCount: _todos.items.length,
+                          itemBuilder: (context, index) {
+                            final todo = _todos.items[index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 5,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: (todo.isCompleted)
+                                      ? Colors.grey[50]
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                                child: ListTile(
+                                  leading: Checkbox(
+                                    value: _todos.items[index].isCompleted,
+                                    activeColor: Colors.blue,
+                                    side: BorderSide(
+                                        color: Colors.blue, width: 2),
+                                    onChanged: (value) {},
+                                  ),
+                                  title: Text(
+                                    _todos.items[index].title,
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  subtitle: Text(
+                                    _todos.items[index].description,
+                                    style: TextStyle(
+                                        color: Colors.grey[400],
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  trailing: InkWell(
+                                    onTap: () {
+                                      deleteTodo(id: _todos.items[index].id);
+                                    },
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: _todos.items[index].isCompleted
+                                          ? Colors.red[100]
+                                          : Colors.red[300],
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                            );
+                          },
+                        ),
             )
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class AddTodo extends StatefulWidget {
   void Function({required String title, required String desc}) addTodo;
   AddTodo({super.key, required this.addTodo});
