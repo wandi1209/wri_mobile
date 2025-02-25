@@ -1,6 +1,4 @@
-# wri_mobile
-
-A new Flutter project.
+# Project To Do List dari Kelas WRI Front-end Mobile
 
 ## Getting Started
 
